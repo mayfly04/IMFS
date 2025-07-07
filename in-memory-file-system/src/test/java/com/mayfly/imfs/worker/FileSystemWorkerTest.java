@@ -62,8 +62,12 @@ class FileSystemWorkerTest {
         assertNotNull(fs.getChildren());
         assertNotNull(fs.getChild("txt.file"));
         childFs = fs.getChild("photos2025");
+        assertNotNull(childFs.getLastModified());
+        assertEquals("AB1\\photos2025", childFs.getPath());
         FileSystemEntity child = (FileSystemEntity) childFs;
         assertNotNull(child.getChild("txt2.file"));
+        assertNotNull(childFs.getLastModified());
+        assertEquals("AB1\\photos2025\\txt2.file", child.getChild("txt2.file").getPath());
         assertNotNull(childFs);
         assertTrue(childFs.getName().equals("photos2025"));
         assertTrue(childFs.getType().equals(type));
