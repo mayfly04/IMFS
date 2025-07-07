@@ -203,6 +203,12 @@ class FileSystemWorkerTest {
         worker.create(EntityType.DRIVE, "M", null);
         worker.create(EntityType.TEXT_FILE, "draft.txt", "M");
         worker.rename("M\\draft.txt", "final.txt");
+        FileSystemEntity dest = (FileSystemEntity) worker.getDrives().get("M");
+        assertNotNull(dest);
+        
+        assertEquals(1, dest.getChildren().size());
+        assertDoesNotThrow(() -> (Entity) worker.getDrives().get("M").getChild("final.txt"));
+        assertThrows(EntityNotFoundException.class, () -> worker.getDrives().get("M").getChild("draft.txt"));
     }
 
     @Test
